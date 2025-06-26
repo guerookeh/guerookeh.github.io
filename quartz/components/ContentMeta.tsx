@@ -29,12 +29,13 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     if (text) {
       const segments: (string | JSX.Element)[] = []
 
-      if (fileData.dates) {
+      if (fileData.frontmatter?.showDate === true && fileData.dates) { // EDIT: Conditioned on showDate, strict equality for if value undefined
         segments.push(<Date date={getDate(cfg, fileData)!} locale={cfg.locale} />)
       }
 
       // Display reading time if enabled
-      if (options.showReadingTime) {
+      // EDIT: Changed to being conditioned on frontmatter's showReadingTime, strict equality for if value undefined
+      if (fileData.frontmatter?.showReadingTime === true) {
         const { minutes, words: _words } = readingTime(text)
         const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
           minutes: Math.ceil(minutes),

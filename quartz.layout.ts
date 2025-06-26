@@ -45,6 +45,12 @@ export const defaultContentPageLayout: PageLayout = {
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
+  afterBody: [
+    Component.ConditionalRender({
+      component: Component.RecentNotes(),
+      condition: (page) => page.fileData.slug == "index",
+    })
+  ]
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
