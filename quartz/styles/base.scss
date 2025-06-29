@@ -641,3 +641,37 @@ iframe.pdf {
   transition: width 0.2s ease;
   z-index: 9999;
 }
+
+/* OVERRIDE VERTICAL SPACING RULES FOR ALL ELEMENTS */
+
+// Global balanced compact spacing for common elements
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.6rem;
+  margin-bottom: 1.1rem;
+}
+
+p, ul, ol, blockquote, pre, table, img, hr {
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+li {
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+table {
+  margin: 1.1rem 0;
+}
+
+hr {
+  margin: 1.85rem 0;
+}
+
+code, pre {
+  line-height: 1.65rem;
+}
+
+tbody, li, p {
+  line-height: 1.65rem;
+}
