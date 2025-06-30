@@ -644,34 +644,40 @@ iframe.pdf {
 
 /* OVERRIDE VERTICAL SPACING RULES FOR ALL ELEMENTS */
 
-// Global balanced compact spacing for common elements
+/* Headings: give them clear vertical separation */
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 1.6rem;
-  margin-bottom: 1.1rem;
+  margin-top: 2.2rem;
+  margin-bottom: 1.5rem;
 }
 
+/* Blocks: increase spacing to break up walls of text */
 p, ul, ol, blockquote, pre, table, img, hr {
-  margin-top: 1.1rem;
-  margin-bottom: 1.1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
+/* List items: slightly more breathing room */
 li {
-  margin-top: 0.6rem;
-  margin-bottom: 0.6rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
+/* Table: ensure vertical space before and after */
 table {
-  margin: 1.1rem 0;
+  margin: 1.5rem 0;
 }
 
+/* Horizontal rule: act as a clear section divider */
 hr {
-  margin: 1.85rem 0;
+  margin: 2.5rem 0;
 }
 
+/* Code and preformatted text: consistent relaxed line height */
 code, pre {
-  line-height: 1.65rem;
+  line-height: 1.8rem;
 }
 
+/* Paragraphs, list items, table body: improve legibility */
 tbody, li, p {
-  line-height: 1.65rem;
+  line-height: 1.8rem;
 }
