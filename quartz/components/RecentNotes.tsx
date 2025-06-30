@@ -32,7 +32,12 @@ export default ((userOpts?: Partial<Options>) => {
     displayClass,
     cfg,
   }: QuartzComponentProps) => {
-    const opts = { ...defaultOptions(cfg), ...userOpts }
+    const opts = {
+      ...defaultOptions(cfg),
+      ...userOpts,
+      filter: (f: QuartzPluginData) => 
+        f.slug !== "index" && (userOpts?.filter ? userOpts.filter(f) : true), // Exclude index from recent notes, if a user defined filter exists, apply it
+    }    
     const pages = allFiles.filter(opts.filter).sort(opts.sort)
     const remaining = Math.max(0, pages.length - opts.limit)
     return (
