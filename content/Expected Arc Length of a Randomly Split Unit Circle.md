@@ -6,13 +6,14 @@ tags:
   - probability
 ---
 
-A somewhat elaborate solution to an interesting problem I saw online.
+
+**A somewhat elaborate solution to an interesting problem I saw online.**
+
+***
 ## Problem Statement 
 Suppose you have a unit circle whose circumference is split by choosing three uniformly random points. What is the expected length of the arc that contains the point $(1,0)$?
 
 As an afterthought, what is the expected length of the arc if we generalized it to $n$ points?
-
----
 ## 3-Point Case
 Let $X_1,X_2,X_3\sim U(0, 2\pi)$ represent the three points chosen uniformly at random on the circumference of the unit circle. 
 
@@ -128,7 +129,7 @@ This solution considers the arc length from $(1,0)$ to the next point in the int
 
 We can see this where we calculated $\mathbb{E}[X_{\text{min}}] = \frac{2\pi}{n+1}$, and doubling it yields $\frac{4\pi}{n+1}$.
 
----
+***
 ## References
 1. [Hagen Von Eitzen's solution in StackExchange](https://math.stackexchange.com/questions/272927/expected-length-of-arc-in-a-randomly-divided-circle)
 2. [WolframAlpha, derivative and integral work](https://www.wolframalpha.com)

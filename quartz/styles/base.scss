@@ -569,7 +569,7 @@ p > img + em {
 
 hr {
   width: 100%;
-  margin: 2rem auto;
+  // margin: 2rem auto;
   height: 1px;
   border: none;
   background-color: var(--lightgray);
@@ -644,40 +644,47 @@ iframe.pdf {
 
 /* OVERRIDE VERTICAL SPACING RULES FOR ALL ELEMENTS */
 
-/* Headings: give them clear vertical separation */
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 2.2rem;
-  margin-bottom: 1.5rem;
+html {
+  font-size: 110%;  // scales body text ~17.6px if browser default is 16px
 }
 
-/* Blocks: increase spacing to break up walls of text */
-p, ul, ol, blockquote, pre, table, img, hr {
+body {
+  line-height: 1.6;  // base line-height, applies unless overridden
+}
+
+/* Paragraphs: clean, but not too tight */
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* List items: consistent with body text */
+li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Block elements (blockquotes, pre, table, img): separated for clarity */
+blockquote,
+pre,
+table,
+img {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-/* List items: slightly more breathing room */
-li {
-  margin-top: 0.8rem;
-  margin-bottom: 0.8rem;
-}
-
-/* Table: ensure vertical space before and after */
-table {
-  margin: 1.5rem 0;
-}
-
-/* Horizontal rule: act as a clear section divider */
+/* Horizontal rule: clear section divider but not over-spaced */
 hr {
-  margin: 2.5rem 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+  clear: both;
 }
 
-/* Code and preformatted text: consistent relaxed line height */
-code, pre {
-  line-height: 1.8rem;
-}
-
-/* Paragraphs, list items, table body: improve legibility */
-tbody, li, p {
-  line-height: 1.8rem;
+/* Headings: distinct separation, but not enormous */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
