@@ -61,7 +61,7 @@ meaning that this alternative estimator would actually overestimate the populati
 
 Note that this result doesn't make any distributional assumptions, so it holds for any identically and independently distributed data with a finite mean. Although these assumptions change when discussing sampling distributions of variance and standard deviation.
 
-## "Naive" Sample Variance as a Biased Estimator of the Variance
+## Naive Sample Variance as a Biased Estimator of the Variance
 
 Suppose our naive guess at defining the sample variance estimator, $s^2_g$, was,
 $$
