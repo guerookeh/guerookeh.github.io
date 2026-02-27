@@ -25,9 +25,11 @@ draft: true
 - Every single machine learning algorithm in-depth
 - Domain-adaptive neural network to generalize a source to target distribution
 - Build an autodifferentiator
+- Manipulating prefix of context to steer LLM towards malicious responses
+- Implicit credit-attribution within LLMs / Training-Data Attribution (TDA) within LLMs
 
 ***
-### Progress
-#### Aug 18 - Aug 24, 2025
-- Want to write an autodifferentiator!
+### Miscellaneous Notes
+- I should probably try to separate my gradient norm topic ideas into two different topics to avoid much overlap: efficient backpropagation, and gradient norm control.
+
 

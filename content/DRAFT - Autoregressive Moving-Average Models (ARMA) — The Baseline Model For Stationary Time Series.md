@@ -41,6 +41,67 @@ With the concept of stochastic process established, we now consider an important
 
 We say a 
 
+let $\{X_t\}$ be a stochastic process
+
+let $F_X(x_{t_1+\tau},\dots,x_{t_n+\tau})$ represent the cumulative distribution function of the unconditional joint distribution of $\{X_t\}$ at times $t_1+\tau, \dots, t_n+\tau$
+
+then, $\{X_t\}$ is said to be strictly stationary, strongly stationary, or strict-sense stationary if
+
+$$
+F_X(x_{t_1+\tau},\dots,x_{t_n+\tau})=F_X(x_{t_1},\dots,x_{t_n})\quad \text{for all }\tau,t_1,\dots,t_n\in\mathbb{R} \text{ and for all } n\in \mathbb{N}_{>0}
+$$
+
+since $\tau$ does not affect $F_X(\cdot)$, $F_X$ is independent of time
+
+intuitively, this is saying that if we shift all time points by the same amount $\tau$, the joint probabilistic behavior doesn't change. this rules out possibilities for trends, seasonalities, changing variance, and evolving correlations
+
+the unconditional joint distribution of $\{X_t\}$ at times $t_1+\tau, \dots, t_n+\tau$ can also be written as,
+$$
+F_X(x_{t_1}, \dots, x_{t_n})=\Pr(X_{t_1}\leq x_{t_1}, X_{t_2}\leq x_{t_2}, \dots, X_{t_n}\leq x_{t_n})
+$$
+
+weak or wide-sense stationarity instead require that only the first moment (i.e. the mean) and autocovariance do not vary with respect to the time and that the second moment is finite for all times, any strictly stationary process which has a finite mean and covariance is also WSS
+
+a continuous time random process $\{X_t\}$ which is WSS has the following restrictions on its 
+- mean function $m_X(t) \triangleq \mathbb{E}[X_t]$ 
+- autocovariance function $K_{XX}(t_1,t_2)\triangleq \mathbb{E}[(X_{t_1}-m_X(t_1))(X_{t_2}-m_X(t_2))]$
+
+the autocovariance function measures how much $X_{t_1}$ and $X_{t_2}$ co-vary, i.e., how the value of the process at one time is linearly related to its value at another. 
+
+diving a bit deeper into this, covariance quantifies the joint variability of two random variables. if large values of one variable tend to correspond to large values of another, the covariance is positive, if large values of one correspond to small values of another, its negative. correlation is the normalized version of covariance, it always lies between -1 and 1 and measure the strength of the linear relationship rather than its magnitude.
+$$
+\rho_{XX}(t_1,t_2)=\frac{K_{XX}(t_1,t_2)}{\sqrt{K_{XX}(t_1,t_1)}\sqrt{K_{XX}(t_2,t_2)}}
+$$thus, $K_{XX}$ encodes the same structural information as correlation, but in physical units of $X_t$, so it's not normalized.
+
+we can show why the autocovariance function is of such a form by deriving it from basic covariance. from two random variables $X$ and $Y$,
+$$
+\text{Cov}(X,Y)=\mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])]
+$$
+for a process, we simply take $X=X_{t_1}$ and $Y=X_{t_2}$,
+$$
+K_{XX}(t_1,t_2)=\text{Cov}(X_{t_1}, X_{t_2})
+$$
+which measures the linear dependence between values of the process at two times
+
+to understand covariance a bit more thoroughly, let's decompose covariance to its standard and most useful form
+$$
+\begin{align}
+\text{Cov}(X,Y)&=\mathbb{E}[XY-X\mathbb{E}[Y]-Y\mathbb{E}[X]+\mathbb{E}[X]\mathbb{E}[Y]] \\
+&= \mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y]
+\end{align}
+$$
+covariance is the expected product of deviations of $X$ and $Y$ from their means,
+- if $X$ and $Y$ are both above or both below their means simultaneously, $(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])>0$ 
+- if one is above and the other is below, $(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])<0$ 
+- taking the expectation of this product tells us the typical direction and magnitude of joint deviations
+thus,
+- $\text{Cov}(X,Y)>0$ means they move together, a positive linear relationship
+- $\text{Cov}(X,Y)<0$ means that they move oppositely, a negative linear relationship
+- $\text{Cov}(X,Y)=0$ means no linear relationship, but not necessarily independent
+covariance detects only linear dependence 
+
+
+
 
 
 ***
