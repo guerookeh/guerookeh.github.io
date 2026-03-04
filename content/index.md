@@ -1,5 +1,5 @@
 ---
-title: güero's library
+title: güero's bookshelf
 showDate: false
 showReadingTime: false
 cssclasses:
