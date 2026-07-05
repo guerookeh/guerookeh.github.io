@@ -4,7 +4,7 @@ showDate: true
 showReadingTime: true
 draft: true
 tags:
-  - "#information-theory"
+  - information-theory
 ---
 
 **An introduction to some information theory concepts.**
@@ -37,7 +37,6 @@ Shannon's argument was that having *a priori* statistical knowledge, specificall
 ***
 ### References
 1. [*The Mathematical Theory of Communication* (Claude Shannon, 1948)](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf)
-
 
 
 

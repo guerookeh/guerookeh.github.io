@@ -49,11 +49,16 @@ ul.toc-content.overflow {
 
   & > li > a {
     color: var(--dark);
+    display: inline-block;
+    font-size: 0.92rem;
+    line-height: 1.25;
     opacity: 0.35;
     transition:
       0.5s ease opacity,
       0.3s ease color;
     &.in-view {
+      color: var(--secondary);
+      font-weight: 600;
       opacity: 0.75;
     }
   }
@@ -62,5 +67,28 @@ ul.toc-content.overflow {
     & .depth-#{$i} {
       padding-left: calc(1rem * #{$i});
     }
+  }
+
+  & .depth-1 > a {
+    font-size: 0.86rem;
+  }
+
+  & .depth-2 > a,
+  & .depth-3 > a,
+  & .depth-4 > a,
+  & .depth-5 > a,
+  & .depth-6 > a {
+    font-size: 0.8rem;
+    opacity: 0.3;
+  }
+
+  & .depth-2 > a.in-view,
+  & .depth-3 > a.in-view,
+  & .depth-4 > a.in-view,
+  & .depth-5 > a.in-view,
+  & .depth-6 > a.in-view {
+    color: var(--secondary);
+    font-weight: 600;
+    opacity: 0.65;
   }
 }

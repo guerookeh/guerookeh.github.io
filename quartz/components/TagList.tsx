@@ -29,7 +29,7 @@ TagList.css = `
   list-style: none;
   display: flex;
   padding-left: 0;
-  gap: 0.4rem;
+  gap: 0.3rem;
   margin: 1rem 0;
   flex-wrap: wrap;
 }
@@ -46,10 +46,12 @@ TagList.css = `
 }
 
 a.internal.tag-link {
-  border-radius: 8px;
+  border-radius: 7px;
   background-color: var(--highlight);
-  padding: 0.2rem 0.4rem;
-  margin: 0 0.1rem;
+  font-size: 0.88rem;
+  line-height: 1.2;
+  padding: 0.12rem 0.3rem;
+  margin: 0;
 }
 `
 

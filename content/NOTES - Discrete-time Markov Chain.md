@@ -2,8 +2,8 @@
 title: NOTES - Discrete-time Markov Chain
 draft: true
 tags:
-  - "#probability"
-  - "#markov-chain"
+  - probability
+  - stochastic-processes
 ---
 Based off of J.R. Norris' Markov Chains textbook.
 ## 1.1  Definition and Basic Properties
@@ -19,6 +19,5 @@ Suppose we set,
 $$ \lambda_i=\Pr(X=i)=\Pr(\{ \omega:X(\omega)=i \}) $$
 Then $\lambda$ defines a distribution, the *distribution* of $X$. 
 Think of $X$ as modelling a random state which takes the value $i$ with probability $\lambda_i$.
-
 
 

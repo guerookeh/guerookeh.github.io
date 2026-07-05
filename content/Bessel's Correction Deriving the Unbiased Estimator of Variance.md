@@ -1,11 +1,15 @@
 ---
 title: "Bessel's Correction: Deriving the Unbiased Estimator of Variance"
+published: 2025-10-12
+created: 2025-10-12
+modified: 2025-10-12
+description: "A derivation showing how finite-sample bias arises in the naive sample variance, and how Bessel's correction removes it."
 draft: false
 showDate: true
 showReadingTime: true
 tags:
   - statistics
-  - estimators
+  - estimation
 ---
 **A derivation showing how finite-sample bias arises in the naive sample variance, and how Bessel's correction removes it.**
 ***

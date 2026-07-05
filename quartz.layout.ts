@@ -4,7 +4,11 @@ import * as Component from "./quartz/components"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [],
+  header: [
+    Component.Flex({
+      components: [{ Component: Component.Darkmode() }, { Component: Component.ReaderMode() }],
+    }),
+  ],
   afterBody: [],
   footer: Component.Footer({
     links: {
@@ -23,29 +27,39 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ContentMeta(),
     Component.TagList(),
   ],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
-      ],
-    }),
-    Component.Explorer(),
-  ],
+  left: [],
   right: [
-    Component.Graph(),
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
+    Component.ConditionalRender({
+      component: Component.Search(),
+      condition: (page) => page.fileData.slug == "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.Graph({
+        localGraph: {
+          depth: -1,
+          scale: 0.9,
+          focusOnHover: true,
+          enableRadial: true,
+        },
+      }),
+      condition: (page) => page.fileData.slug == "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.AllTags(),
+      condition: (page) => page.fileData.slug == "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.DesktopOnly(Component.TableOfContents()),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.Backlinks(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
   ],
   afterBody: [
     Component.ConditionalRender({
-      component: Component.RecentNotes(),
+      component: Component.AllNotes(),
       condition: (page) => page.fileData.slug == "index",
     })
   ]
@@ -54,19 +68,6 @@ export const defaultContentPageLayout: PageLayout = {
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-      ],
-    }),
-    Component.Explorer(),
-  ],
+  left: [],
   right: [],
 }

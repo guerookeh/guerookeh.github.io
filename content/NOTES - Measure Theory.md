@@ -2,7 +2,7 @@
 title: NOTES - Measure Theory
 draft: true
 tags:
-  - "#measure-theory"
+  - measure-theory
 ---
 
 Notes from [MATH 41021/61021 Measure Theory and Ergodic Theory, Donald Robertson](https://personalpages.manchester.ac.uk/staff/donald.robertson/teaching/23-24/41021/notes/length.html).

@@ -4,7 +4,9 @@ showDate: true
 showReadingTime: true
 draft: true
 tags:
-  - "#machine-learning"
+  - deep-learning
+  - neural-networks
+  - optimization
 ---
 **A derivation of activation-dependent layer-wise upper bounds on backpropagated gradient norms in a fully connected MLPs and their implications for gradient flow and stability.**
 ***
@@ -19,7 +21,6 @@ It is obvious that in the forward propagation of an MLP, the overall loss of the
 ***
 
 The [vanishing and exploding gradients problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem) can be understood as the contraction or amplification of the backpropagated learning signal due to repeated multiplication by layer Jacobians, respectively. More generally, 
-
 
 
 

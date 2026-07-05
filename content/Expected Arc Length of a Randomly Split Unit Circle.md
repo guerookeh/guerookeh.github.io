@@ -1,9 +1,15 @@
 ---
 title: Expected Arc Length of a Randomly Split Unit Circle
+published: 2025-06-29
+created: 2025-06-29
+modified: 2025-10-10
+description: "Computing the expected length of the arc containing a fixed point after randomly splitting the unit circle, first for three points and then for the general n-point case."
+draft: false
 showDate: true
 showReadingTime: true
 tags:
   - probability
+  - geometry
 ---
 
 
@@ -133,10 +139,6 @@ We can see this where we calculated $\mathbb{E}[X_{\text{min}}] = \frac{2\pi}{n+
 ## References
 1. [Hagen Von Eitzen's solution in StackExchange](https://math.stackexchange.com/questions/272927/expected-length-of-arc-in-a-randomly-divided-circle)
 2. [WolframAlpha, derivative and integral work](https://www.wolframalpha.com)
-
-
-
-
 
 
 

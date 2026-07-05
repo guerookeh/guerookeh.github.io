@@ -1,13 +1,17 @@
 ---
 title: Backpropagation in Multi-Layer Perceptrons
+published: 2026-02-27
+created: 2026-02-27
+modified: 2026-02-27
+description: "I explore and develop backpropagation for multi-layer perceptrons from first principles: model definition, empirical risk, forward/backward computation graphs, an induction-based derivation of the error-signal recursion, and the resulting algorithms and complexity."
 showDate: true
 showReadingTime: true
 draft: false
 tags:
-  - "#deep-learning"
-  - "#multi-layer-perceptrons"
+  - machine-learning
+  - deep-learning
   - neural-networks
-  - dynamic-programming
+  - optimization
 ---
 **I explore and develop backpropagation for multi-layer perceptrons from first principles: model definition, empirical risk, forward/backward computation graphs, an induction-based derivation of the error-signal recursion, and the resulting algorithms and complexity; explicitly identifying the intermediates the backward pass depends on.**
 ***

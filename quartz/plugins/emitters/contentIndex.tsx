@@ -92,6 +92,11 @@ function generateRSSFeed(cfg: GlobalConfiguration, idx: ContentIndexMap, limit?:
   </rss>`
 }
 
+function isDraft(file: ContentDetails | { data: { frontmatter?: { draft?: boolean | string } } }): boolean {
+  const draft = "data" in file ? file.data.frontmatter?.draft : undefined
+  return draft === true || draft === "true"
+}
+
 export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
   opts = { ...defaultOptions, ...opts }
   return {
@@ -99,7 +104,14 @@ export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
     async *emit(ctx, content) {
       const cfg = ctx.cfg.configuration
       const linkIndex: ContentIndexMap = new Map()
-      for (const [tree, file] of content) {
+      const draftSlugs = new Set(
+        content
+          .filter(([_tree, file]) => isDraft(file))
+          .map(([_tree, file]) => simplifySlug(file.data.slug!)),
+      )
+      const publishedContent = content.filter(([_tree, file]) => !isDraft(file))
+
+      for (const [tree, file] of publishedContent) {
         const slug = file.data.slug!
         const date = getDate(ctx.cfg.configuration, file.data) ?? new Date()
         if (opts?.includeEmptyFiles || (file.data.text && file.data.text !== "")) {
@@ -107,7 +119,7 @@ export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
             slug,
             filePath: file.data.relativePath!,
             title: file.data.frontmatter?.title!,
-            links: file.data.links ?? [],
+            links: (file.data.links ?? []).filter((link) => !draftSlugs.has(link)),
             tags: file.data.frontmatter?.tags ?? [],
             content: file.data.text ?? "",
             richContent: opts?.rssFullHtml
