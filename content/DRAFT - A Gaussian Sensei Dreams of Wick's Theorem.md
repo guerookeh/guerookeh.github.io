@@ -1,9 +1,9 @@
 ---
-title: "A Gaussian Sensei Dreams of Wick's Theorem"
-published: 2026-07-03
-created: 2026-07-03
-modified: 2026-07-03
-description: "A detailed derivation of Wick's theorem, building from univariate Gaussian moments to the pairing structure behind the multivariate formula."
+title: A Gaussian Sensei Dreams of Wick's Theorem
+published: 2026-08-05
+created: 2026-08-05
+modified: 2026-08-05
+description: A detailed derivation of Wick's theorem, building from univariate Gaussian moments to the pairing structure behind the multivariate formula.
 showDate: true
 showReadingTime: true
 draft: false
@@ -14,7 +14,7 @@ tags:
   - gaussian-distributions
   - combinatorics
 ---
-The aim of this post is for me to try and intuitively tackle the Gaussian integral section of the pretraining section of *The Principles of Deep Learning Theory*, particularly the grand result: a derivation of Wick's theorem. 
+This post is my attempt to work through the Gaussian integral section of *The Principles of Deep Learning Theory*, with the main result being a derivation of Wick's theorem.
 ***
 ## Abstract
 
@@ -46,7 +46,7 @@ For the rest of the derivation, Wick's theorem will be applied to the centered c
 $$
 Z_i=X_i-\mu_i
 $$
-**Therefore, whenever we compute higher-order moments using Wick's theorem, it is important to note that we are working with the zero-mean multivariate Gaussian random vector $\mathbf{Z}$, or alternatively univariate Gaussian random variable, rather than directly with $\mathbf{X}$**. Moments of the original variables $X_i$ can be obtained afterward by substituting $X_i=\mu_i+Z_i$ and expanding.
+Throughout the derivation, Wick's theorem is applied to the centered variables $Z_i$, or to the centered univariate Gaussian variable $Z$, rather than directly to $X_i$. Moments of the original variables can be recovered afterward by substituting $X_i=\mu_i+Z_i$ and expanding.
 
 ***
 ## Part I: Univariate Gaussian Case
@@ -187,13 +187,13 @@ Assign an index to each factor, so that we can distinguish the positions of the 
 $$
 (Z_1,Z_2,Z_3,\dots,Z_{2m}).
 $$
-In the univariate case, these labels do not represent independent random variables. Rather, they label the $2m$ occurrences of the same centered Gaussian random variable $Z$ inside the product. Although the reason for this distinction might not be entirely clear in the univariate case, it will become clear in the multivariate case; it still helps illustrate our point here.
+In the univariate case, these labels do not represent independent random variables. Rather, they label the $2m$ positions occupied by the same centered Gaussian random variable $Z$.
 
 With this assignment, the product of $2m$ factors above can be written as
 $$
 Z_{i_1}\cdot Z_{i_2}\cdots Z_{i_{2m}},
 $$
-where $i_k$ corresponds to the $k$-th selected factor. As one can imagine, many orderings of indices $(i_1,i_2,\dots,i_{2m})$ can be made (with repetition allowed), but in the univariate case this is redundant because every selected factor is still the same random variable $Z$. Again, the idea will be useful in the multivariate case.
+where $i_k$ labels the $k$-th position in the product. The labels are redundant here, but this positional viewpoint will become useful in the multivariate case.
 
 A pair is a two-element subset of indices, such as $\{\alpha,\beta\}$. The contribution of this pair is the expected value of the product of the two corresponding factors. In the univariate case, since all factors are occurrences of the same random variable, this contribution is the same for every pair. More precisely, for a pair $\{\alpha,\beta\}$,
 $$
@@ -219,9 +219,9 @@ p=
 \right\}.
 $$
 
-The above object is one pairing. We denote by $P^2_{2m}$ the set of all pairings of $\{1,\dots,2m\}$. Equivalently, $P^2_{2m}$ is the set of all partitions of $\{1,\dots,2m\}$ into pairs.
+We denote by $P^2_{2m}$ the set of all pairings of $\{1,\dots,2m\}$, equivalently all partitions of $\{1,\dots,2m\}$ into unordered pairs.
 
-If we have $2m$ indices to pair, then each pairing contains $m$ pairs. The first pair can be made into
+To count them, first form ordered collections of unordered pairs. The first pair can be chosen in
 $$
 2m(2m-1)
 $$
@@ -229,11 +229,11 @@ ordered pairs, or
 $$
 \frac{2m(2m-1)}{2!}
 $$
-unordered pairs, which is what we want. Repeating the process for the second pair gives
+unordered pairs. Repeating the process for the second pair gives
 $$
 \frac{(2m-2)(2m-3)}{2!}
 $$
-possible unordered pairs. If we continue this process for all $m$ pairs, then we obtain
+possible unordered pairs. Continuing this process gives
 $$
 \frac{2m(2m-1)}{2!}
 \cdot
@@ -252,9 +252,7 @@ $$
 $$
 which is exactly the factor found in the general formula above.
 
-Having understood the reasoning for the previous factor, recall Wick's theorem once again: the expectation of the product of the $2m$ factors $Z_{i_1}\cdot Z_{i_2}\cdots Z_{i_{2m}}$ is obtained by summing over all possible pairings of these factors. Knowing that we have $(2m-1)!!$ possible pairings of these $2m$ factors, the only thing left to do is to sum up the contribution from each pairing.
-
-For a fixed pairing $p\in P^2_{2m}$, Wick's theorem associates one second moment to each pair $\{\alpha,\beta\}\in p$. The term corresponding to the pairing $p$ is therefore
+It remains to compute the contribution of each pairing. For a fixed pairing $p\in P^2_{2m}$, Wick's theorem associates one second moment to each pair $\{\alpha,\beta\}\in p$. The term corresponding to the pairing $p$ is therefore
 $$
 \prod_{\{\alpha,\beta\}\in p}
 \mathbb E[Z_\alpha Z_\beta].
@@ -297,7 +295,7 @@ $$
 ***
 ## Part II: Multivariate Gaussian Case
 
-We now extend the ideas from the univariate case to multivariate Gaussian random vectors. As in the [[#Univariate Gaussian Case]], we review the same topics before deriving the general Wick's theorem result.
+We now repeat the same MGF strategy for Gaussian random vectors, where the bookkeeping of pairings becomes nontrivial.
 
 ### 2.1 — Gaussian Density
 
@@ -326,7 +324,7 @@ By the Law of the Unconscious Statistician (LOTUS), if $\mathbf{Z}$ is a continu
 $$
 \mathbb{E}[g(\mathbf{Z})]=\int_{-\infty}^{\infty}g(\mathbf{z})f_\mathbf{Z}(\mathbf{z})d\mathbf{z}
 $$
-Now, we take the function $g(\mathbf{z})=z_{i_1}z_{i_2}\cdots z_{i_{2m}}$ for indices $(i_1, \dots, i_{2m}) \in\{1,\dots, n \}$, note that these are not necessarily distinct, meaning repetition is allowed. Therefore, the joint moment of order $2m$ is
+For a tuple $(i_1,\dots,i_{2m})\in\{1,\dots,n\}^{2m}$, with repetition allowed, the corresponding joint moment is
 $$
 \mathbb{E}[Z_{i_1}Z_{i_2}\dots Z_{i_{2m}}]=\int_{-\infty}^{\infty}\dots\int_{-\infty}^{\infty} z_{i_1}z_{i_2}\dots z_{i_{2m}}\frac{1}{\sqrt{(2\pi)^n \text{det}(\Sigma)}}\exp\left( -\frac{1}{2}\mathbf{z}^T\Sigma ^{-1}\mathbf{z} \right)dz_1\dots dz_{n}
 $$
@@ -374,7 +372,7 @@ $$
 $$
 The above is the direct multivariate generalization of $M_X^{(k)}(0)=\mathbb{E}[X^k]$ from section [[#1.3 — Moment-Generating Functions]]. 
 
-It is a worthwhile exercise to rigorously derive the above formula since we mostly gloss over some of the differentiation and combinatoric details. We work through these details explicitly in [[#Appendix B — Explicit Multinomial Expansion]], showing how the multinomial coefficient produced by expanding $(\mathbf{t}^T\mathbf{X})^{2m}$ exactly cancels the factorials produced by repeated differentiation. We also illustrate an example of applying the above formula.
+The differentiation formula above is justified more explicitly in [[#Appendix B — Explicit Multinomial Expansion]], where the multinomial coefficient from $(\mathbf{t}^T\mathbf{X})^{2m}$ is shown to cancel the factorials produced by repeated differentiation.
 
 ### 2.4 — Wick's Theorem
 
@@ -401,9 +399,9 @@ M_\mathbf{Z}(\mathbf{t})=\sum_{m=0}^\infty \frac{1}{2 ^m m!}\left( \mathbf{t}^T\
 $$
 Now, expand the inner term of the exponential into a double summation,
 $$
-M_\mathbf{Z}(\mathbf{t})=\sum_{m=0}^\infty \frac{1}{2 ^m m!}\left( \sum_{\alpha,\beta=1}^n t_\alpha\Sigma_{\alpha\beta}t_\beta\right)^m.
+M_\mathbf{Z}(\mathbf{t})=\sum_{m=0}^\infty \frac{1}{2 ^m m!}\left( \sum_{a,b=1}^n t_a\Sigma_{ab}t_b\right)^m.
 $$
-The inner object $\sum_{\alpha,\beta} t_\alpha\Sigma_{\alpha\beta}t_\beta$ is homogeneous of degree $2$ in $\mathbf{t}$. Therefore, its $m$-th power is homogeneous of degree $2m$, so the Gaussian MGF contains only even-degree terms.
+The inner object $\sum_{a,b} t_a\Sigma_{ab}t_b$ is homogeneous of degree $2$ in $\mathbf{t}$. Therefore, its $m$-th power is homogeneous of degree $2m$, so the Gaussian MGF contains only even-degree terms.
 
 Recall from section [[#2.3 — Moment-Generating Functions]] that to compute $\mathbb{E}[Z_{i_1}\cdots Z_{i_k}]$, we differentiate $M_\mathbf{Z}(\mathbf{t})$ once with respect to each of $t_{i_1}, \dots, t_{i_k}$ and then evaluate at $\mathbf{t}=0$. Since the Gaussian MGF contains only even-degree terms, there is no degree-$k$ term for this derivative to extract when $k$ is odd. Therefore,
 $$
@@ -417,11 +415,11 @@ On the other hand, we previously obtained the zero-mean Gaussian random vector-s
 $$
 M_\mathbf{Z}(\mathbf{t})=\sum_{m=0}^\infty \frac{1}{2 ^m m!}\left( \mathbf{t}^T\Sigma \mathbf{t}\right)^m
 $$
-Both expressions are Maclaurin series of the same function $M_{\mathbf{Z}}(\mathbf{t})$ (if we set $\mathbf{X}=\mathbf{Z}$ in the general formula above), which are the power series expansions of $M_\mathbf{Z}(\mathbf{t})$ centered at $\mathbf{t}=0$. Since a convergent Maclaurin series representation of a function is unique, the coefficients of matching-degree terms in the two expansions must be equivalent.
+Both are Maclaurin series for the same function $M_{\mathbf{Z}}(\mathbf{t})$ centered at $\mathbf{t}=0$. By uniqueness of convergent power-series expansions, their matching-degree terms must agree.
 $$
 M_\mathbf{Z}(\mathbf{t})=\sum_{k=0}^\infty\frac{\mathbb{E}[(\mathbf{t}^T\mathbf{Z})^k]}{k!}=\sum_{m=0}^\infty \frac{1}{2 ^m m!}\left( \mathbf{t}^T\Sigma \mathbf{t}\right)^m
 $$
-For the Gaussian-specific series, we know that this expansion contributes only monomials of total degree $2m$ at its $m$-th term (as established above). This means that the general series has to match its terms at even orders $k=2m$; notice this also immediately reproduces the vanishing odd moments result as well, viewed as a consequence of directly matching both of these series. Equating the degree-$2m$ terms of both series then gives
+The Gaussian-specific series contributes only even-degree terms, so we match the general series at orders $k=2m$. Equating the degree-$2m$ terms gives
 $$
 \frac{\mathbb{E}\left[(\mathbf{t}^T\mathbf{Z})^{2m}\right]}{(2m)!}=\frac{1}{2^mm!}(\mathbf{t}^T\Sigma \mathbf{t})^m,
 $$
@@ -438,29 +436,57 @@ $$
 \boxed{
 \mathbb{E}\left[Z_{i_1}Z_{i_2}\cdots Z_{i_{2m}}\right]=\frac{1}{2^mm!}\left[\frac{\partial ^{ 2m}}{\partial t_{i_1}\partial t_{i_2}\cdots \partial t_{i_{2m}}}(\mathbf{t}^T\Sigma \mathbf{t})^m\bigg|_{\mathbf{t}=\mathbf{0}}\right]}.
 $$
-This derivative formula gives the desired moment, but it does not yet display the pairing structure from the [[#Abstract]]. To recover that form, expand $(\mathbf{t}^T\Sigma\mathbf{t})^m=\left(\sum_{\alpha,\beta=1}^n t_\alpha\Sigma_{\alpha\beta}t_\beta\right)^m$ as follows:
+This derivative formula gives the desired moment, but it does not yet display the pairing structure from the [[#Abstract]]. To recover that form, expand $(\mathbf{t}^T\Sigma\mathbf{t})^m=\left(\sum_{a,b=1}^n t_a\Sigma_{ab}t_b\right)^m$ as follows:
 $$
-\left(  \sum_{\alpha,\beta=1}^n t_\alpha\Sigma_{\alpha\beta} t_\beta\right)^m=\sum_{\alpha_1,\beta_1=1}^n\cdots \sum_{\alpha_m,\beta_m=1}^n\left(t_{\alpha_1}\Sigma_{\alpha_1 \beta_1}t_{\beta_1}\right)\cdots\left(t_{\alpha_m}\Sigma_{\alpha_m \beta_m}t_{\beta_m}\right).
+\left(  \sum_{a,b=1}^n t_a\Sigma_{ab} t_b\right)^m=\sum_{a_1,b_1=1}^n\cdots \sum_{a_m,b_m=1}^n\left(t_{a_1}\Sigma_{a_1 b_1}t_{b_1}\right)\cdots\left(t_{a_m}\Sigma_{a_m b_m}t_{b_m}\right).
 $$
 We can simplify the above summation by multiplying the terms as follows,
 $$
-\left( \sum_{\alpha,\beta=1}^n t_\alpha \Sigma_{\alpha\beta}t_\beta \right)^m=\sum_{(\alpha_1, \beta_1), \dots, (\alpha_m, \beta_m)\in\{1,\dots, n\}^ 2} \Sigma_{\alpha_1\beta_1}\Sigma_{\alpha_2\beta_2}\cdots\Sigma_{\alpha_m\beta_m} t_{\alpha_1}t_{\beta_1}t_{\alpha_2}t_{\beta_2}\cdots t_{\alpha_m}t_{\beta_m}.
+\left( \sum_{a,b=1}^n t_a \Sigma_{ab}t_b \right)^m=\sum_{(a_1, b_1), \dots, (a_m, b_m)\in\{1,\dots, n\}^ 2} \Sigma_{a_1b_1}\Sigma_{a_2b_2}\cdots\Sigma_{a_mb_m} t_{a_1}t_{b_1}t_{a_2}t_{b_2}\cdots t_{a_m}t_{b_m}.
 $$
-This is a sum of $n^{2m}$ terms, one for each ordered sequence of $m$ index-pairs $(\alpha_1, \beta_1), \dots, (\alpha_m,\beta_m)$ which are drawn from $\{ 1,\dots,n \}^2$. More intuitively, at each slot in each pair, you have $n$ choices, for which if you repeat $2m$ times you get $n^{2m}$. We can substitute this expression back into the general-use formula above.
+This is a sum of $n^{2m}$ terms, one for each ordered sequence of $m$ coordinate-label pairs $(a_1,b_1),\dots,(a_m,b_m)$ drawn from $\{1,\dots,n\}^2$. Substituting this expression into the derivative formula gives
 $$
-\frac{1}{2^mm!}\left[\frac{\partial ^{ 2m}}{\partial t_{i_1}\partial t_{i_2}\cdots \partial t_{i_{2m}}}\left(\sum_{(\alpha_1, \beta_1), \dots, (\alpha_m, \beta_m)\in\{1,\dots, n\}^ 2} \Sigma_{\alpha_1\beta_1}\Sigma_{\alpha_2\beta_2}\cdots\Sigma_{\alpha_m\beta_m} t_{\alpha_1}t_{\beta_1}t_{\alpha_2}t_{\beta_2}\cdots t_{\alpha_m}t_{\beta_m}\right)\bigg|_{\mathbf{t}=\mathbf{0}}\right]
+\frac{1}{2^mm!}\left[\frac{\partial ^{ 2m}}{\partial t_{i_1}\partial t_{i_2}\cdots \partial t_{i_{2m}}}\left(\sum_{(a_1, b_1), \dots, (a_m, b_m)\in\{1,\dots, n\}^ 2} \Sigma_{a_1b_1}\Sigma_{a_2b_2}\cdots\Sigma_{a_mb_m} t_{a_1}t_{b_1}t_{a_2}t_{b_2}\cdots t_{a_m}t_{b_m}\right)\bigg|_{\mathbf{t}=\mathbf{0}}\right]
 $$
-We first fix one term of the sum that corresponds to a particular choice of coordinate-label pairs $(\alpha_1, \beta_1), \dots, (\alpha_m, \beta_m)$. The monomial corresponding to it is $t_{\alpha_1}t_{\beta_1}\cdots t_{\alpha_{m}}t_{\beta_m}$, which is a product of $2m$ auxiliary variables drawn with repetition allowed from $\{t_1, \dots, t_n\}$. 
+We first fix one term of the sum that corresponds to a particular choice of coordinate-label pairs $(a_1, b_1), \dots, (a_m, b_m)$. The monomial corresponding to it is $t_{a_1}t_{b_1}\cdots t_{a_m}t_{b_m}$, which is a product of $2m$ auxiliary variables drawn with repetition allowed from $\{t_1, \dots, t_n\}$. 
 
-After differentiating with respect to $t_{i_1}t_{i_2}\cdots t_{i_{2m}}$ and then setting $\mathbf{t}=\mathbf{0}$, if the multiset $\{\alpha_1, \beta_1, \dots, \alpha_m, \beta_m\}$ does not exactly equal the multiset $\{i_1, \dots, i_{2m}\}$, then the term is annihilated; this since either some auxiliary variable never appears in the monomial (which kills the term instantly), or some other auxiliary variable gets over or under-differentiated relative to its multiplicity, which leaves either $0$ or a nonzero power of it that vanishes upon setting $\mathbf{t}=0$. On the other hand, if the aforementioned multisets do equal each other, then the monomial is exactly $t_{i_1}t_{i_2}\cdots t_{i_{2m}}$, and differentiating once with respect to each gives coefficient $1$. 
+After differentiating with respect to $t_{i_1},t_{i_2},\dots,t_{i_{2m}}$ and then setting $\mathbf{t}=\mathbf{0}$, if the multiset $\{a_1, b_1, \dots, a_m, b_m\}$ does not exactly equal the multiset $\{i_1, \dots, i_{2m}\}$, then the term is annihilated. This happens because some auxiliary variable is either missing from the monomial, over-differentiated, or under-differentiated relative to its multiplicity.
 
-Here, a pairing should be understood as a partition of the positions $\{1,\dots,2m\}$, not as a partition of the coordinate-label tuple $(i_1,\dots,i_{2m})$ itself. The tuple only tells us which Gaussian coordinate sits in each position. Thus, if $\{\alpha,\beta\}$ is one pair in a pairing, it selects the two factors $Z_{i_\alpha}$ and $Z_{i_\beta}$.
-
-Each surviving choice of coordinate-label pairs determines one such partition of the positions $\{1,\dots,2m\}$ into $m$ unordered pairs. But many of these choices give the same positional pairing for two reasons: swapping the two coordinate labels inside any pair does not change $\Sigma_{\alpha_k\beta_k}=\Sigma_{\beta_k\alpha_k}$, giving a $2^m$ redundancy across $m$ pairs; and permuting the $m$ pair labels does not change the product, giving an additional $m!$ redundancy. So every distinct pairing $p$ of the positions is represented by exactly $2^m\cdot m!$ surviving terms, which each contribute the identical value obtained by multiplying $\Sigma_{i_\alpha i_\beta}$ over the positional pairs $\{\alpha,\beta\}\in p$. 
-
-Therefore, after having differentiated and evaluated at $\mathbf{t}=\mathbf{0}$,
+On the other hand, if the aforementioned multisets do equal each other, then the monomial has exactly the right variables to survive. If the selected coordinate labels are all distinct, differentiating once with respect to each gives coefficient $1$. If some labels repeat, however, the derivative produces the corresponding factorial multiplicities. For example,
 $$
-\sum_{\text{surviving terms}}\Sigma_{\alpha_1 \beta_1}\cdots \Sigma_{\alpha_m\beta_m}=2^m m!\sum_{p\in P^2_{2m}}\prod_{\{\alpha, \beta\}\in p}\Sigma_{i_\alpha i_\beta}.
+\frac{\partial^4}{\partial t_1\partial t_1\partial t_3\partial t_3}
+t_1^2t_3^2
+=
+2!\,2!
+=
+4.
+$$
+So the schematic condition that the two multisets agree should not be read as saying that every surviving monomial differentiates to coefficient $1$. Rather, it identifies which covariance products survive at all. The actual differentiated contribution also includes the factorial multiplicities coming from repeated coordinate labels, exactly as tracked in [[#Appendix B — Explicit Multinomial Expansion]].
+
+The surviving covariance products can be written schematically as
+$$
+\sum_{\{a_1, b_1, \dots, a_m, b_m\}=\{i_1, \dots, i_{2m}\}}\Sigma_{a_1b_1}\Sigma_{a_2b_2}\cdots\Sigma_{a_mb_m}.
+$$
+
+After restricting to the surviving terms, the remaining question is combinatorial: given the $2m$ selected factors $Z_{i_1},\dots,Z_{i_{2m}}$, how can they be grouped into $m$ covariance factors? Equivalently, how can the $2m$ positions in the tuple $(i_1,\dots,i_{2m})$ be organized into an unordered collection of unordered pairs?
+
+A pairing is one such unordered collection:
+$$
+p=\{\{\alpha_1,\beta_1\},\dots,\{\alpha_m,\beta_m\}\}.
+$$
+Here, $\alpha_r,\beta_r$ now refer to positions in the tuple $(i_1,\dots,i_{2m})$. Thus, if $\{\alpha,\beta\}$ is one pair in a pairing, it selects the two factors $Z_{i_\alpha}$ and $Z_{i_\beta}$.
+
+Each surviving choice of coordinate-label pairs determines one such partition of the positions $\{1,\dots,2m\}$ into $m$ unordered pairs. But many of these choices give the same positional pairing for two reasons: swapping the two coordinate labels inside any pair does not change $\Sigma_{a_kb_k}=\Sigma_{b_ka_k}$, giving a $2^m$ redundancy across $m$ pairs; and permuting the $m$ pair labels does not change the product, giving an additional $m!$ redundancy. After accounting for these redundancies and the derivative multiplicities discussed above, each positional pairing contributes with the common factor $2^m m!$.
+
+For a fixed pairing $p$, the covariance contribution is obtained by multiplying one covariance entry across all pairs in $p$:
+$$
+\prod_{\{\alpha,\beta\}\in p}\Sigma_{i_\alpha i_\beta}.
+$$
+Thus, after differentiation and evaluation at $\mathbf{t}=\mathbf{0}$, the surviving contributions can be regrouped by the positional pairing $p$ that they induce:
+$$
+\text{differentiated surviving contribution}
+=
+2^m m!\sum_{p\in P^2_{2m}}\prod_{\{\alpha, \beta\}\in p}\Sigma_{i_\alpha i_\beta}.
 $$
 where $P^2_{2m}$ is the set of all pairings of the positions $\{1, \dots, 2m\}$ into $m$ unordered pairs, and there are $(2m-1)!!$ such pairings in total (also established in [[#1.5 — Combinatorial Intuition for Wick's Theorem]]). Finally, multiplying by the $\frac{1}{2^m m!}$ prefactor that is present in the general-use moment formula cancels this factor exactly:
 $$
@@ -468,11 +494,11 @@ $$
 $$
 We can rephrase a bit here to obtain the final version of Wick's theorem as originally shown in the abstract. Since $\mathbf{Z}$ is centered, each entry of the covariance matrix satisfies
 $$
-\Sigma_{\alpha\beta}
-=\operatorname{Cov}(Z_\alpha,Z_\beta)
-=\mathbb{E}[Z_\alpha Z_\beta].
+\Sigma_{ab}
+=\operatorname{Cov}(Z_a,Z_b)
+=\mathbb{E}[Z_a Z_b].
 $$
-To avoid ambiguity when some of the selected coordinate labels repeat, each pairing is viewed as a partition of the positions $\{1,\dots,2m\}$ rather than directly as a partition of the values in the tuple $(i_1,\dots,i_{2m})$. Thus, if $p\in P^2_{2m}$ and $\{\alpha,\beta\}\in p$, then the pair $\{\alpha,\beta\}$ selects the two Gaussian coordinates $Z_{i_\alpha}$ and $Z_{i_\beta}$. Therefore,
+Thus, for $p\in P^2_{2m}$ and $\{\alpha,\beta\}\in p$,
 $$
 \prod_{\{\alpha,\beta\}\in p}\Sigma_{i_\alpha i_\beta}
 =
@@ -496,6 +522,85 @@ $$
 $$
 where $P^2_{2m}$ is the set of all pairings of the positions $\{1,\dots,2m\}$. This is the multivariate version of the same pairing structure we saw in the univariate case: **higher even moments of a centered Gaussian are completely determined by sums of products of second moments.**
 
+## Part III: A Computational Check
+
+For smaller moments, it is still reasonable to write every pairing by hand. But the count grows quickly. For example,
+$$
+\mathbb{E}[Z_1^2Z_2^2Z_3^2Z_4^2]
+$$
+is an eighth-order moment, so Wick's theorem involves $(8-1)!!=105$ pairings. At that point, the theorem is less useful as something to expand manually and more useful as an algorithm.
+
+Here is a short Python implementation that generates the pairings and computes the Wick sum directly from a covariance matrix:
+
+```python
+import numpy as np
+
+
+def pairings(items):
+    if not items:
+        yield []
+        return
+
+    first = items[0]
+    for k in range(1, len(items)):
+        second = items[k]
+        rest = items[1:k] + items[k + 1:]
+
+        for pairing in pairings(rest):
+            yield [(first, second)] + pairing
+
+
+Sigma = np.array([
+    [1.0, 0.5, 0.2, 0.1],
+    [0.5, 1.5, 0.4, 0.3],
+    [0.2, 0.4, 2.0, 0.6],
+    [0.1, 0.3, 0.6, 1.2],
+])
+
+indices = [0, 0, 1, 1, 2, 2, 3, 3]
+
+wick = 0.0
+all_pairings = list(pairings(list(range(len(indices)))))
+
+for pairing in all_pairings:
+    term = 1.0
+    for a, b in pairing:
+        term *= Sigma[indices[a], indices[b]]
+    wick += term
+
+print(len(all_pairings))
+print(wick)
+```
+
+The list `indices` represents the moment $\mathbb{E}[Z_1^2Z_2^2Z_3^2Z_4^2]$, while each generated pairing tells us which positions should be grouped into covariance factors. The same quantity can be estimated empirically by sampling from the Gaussian and averaging the product:
+
+```python
+rng = np.random.default_rng(0)
+
+samples = rng.multivariate_normal(
+    mean=np.zeros(4),
+    cov=Sigma,
+    size=2_000_000,
+)
+
+Z1, Z2, Z3, Z4 = samples.T
+empirical = np.mean(Z1**2 * Z2**2 * Z3**2 * Z4**2)
+
+print(empirical)
+print(wick)
+```
+
+For the covariance matrix above, this gives:
+
+```text
+105
+9.071200000000003
+9.061678971289233
+9.071200000000003
+```
+
+The empirical value should get closer to the Wick value as the number of samples increases, but the Wick computation gives the exact value determined by the covariance matrix.
+
 ***
 ## Appendix
 
@@ -503,19 +608,19 @@ where $P^2_{2m}$ is the set of all pairings of the positions $\{1,\dots,2m\}$. T
 
 Swapping an expectation with an infinite sum requires justification. In general, the identity $\mathbb{E}[\sum_n a_n(X)]=\sum_n \mathbb{E}[a_n(X)]$ need not hold without additional convergence assumptions.
 
-To be a bit more technical, we say that the sum over the natural numbers can be written as an integral against the counting measure on $\mathbb{N}$. So if $\mu$ is the measure assigning a mass of 1 to each nonnegative integer, then by definition we have that 
+One way to see what is being exchanged is to rewrite the sum as an integral against the counting measure on $\mathbb{N}$. If $\mu$ is the measure assigning a mass of 1 to each nonnegative integer, then by definition
 $$
 \sum_{n=0}^\infty a_n =\int_{\mathbb{N}}a_nd\mu(n).
 $$
-This is the definition of the Lebesgue integral with respect to counting measure, so, 
+Thus,
 $$
 \mathbb{E}\left[ \sum_n a_n(X)\right]\quad \text{vs. } \quad \sum_n \mathbb{E}[a_n(X)]
 $$
-can be considered really as 
+can be viewed as 
 $$
 \int_{\mathbb{R}}\left( \int_{\mathbb{N}}a_n(x)d\mu(n) \right)f_X(x)dx \quad \text{vs .} \quad \int_{\mathbb{N}}\left( \int_\mathbb{R} a_n(x) f_X(x) dx \right)d\mu(n),
 $$
-which is now a double integral over the product space $\mathbb{R}\times \mathbb{N}$, with the two factors being the Lebesgue measure weighted by $f_X(x)$ on $\mathbb{R}$, and the counting measure on $\mathbb{N}$. 
+which is a double integral over the product space $\mathbb{R}\times \mathbb{N}$, with the two factors being the Lebesgue measure weighted by $f_X(x)$ on $\mathbb{R}$ and the counting measure on $\mathbb{N}$. 
 
 The standard sufficient condition to guarantee this swap is absolute convergence of the resulting series. More precisely, the following inequality needs to hold:
 $$
@@ -540,7 +645,7 @@ $$
 &=\sum _{\begin{array}{c}k_{1}+k_{2}+\cdots +k_{n}=2m\\k_{1},k_{2},\cdots ,k_{n}\geq 0\end{array}}{2m \choose k_{1},k_{2},\ldots ,k_{n}}(t_1X_1)^{k_1}\cdot(t_2X_2)^{k_2}\cdots (t_nX_n)^{k_n}
 \end{align*}
 $$
-When differentiating the MGF $2m$ times with respect to the auxiliary variables $t_{i_1}, \dots t_{i_{2m}}$ corresponding to the selected indices $(i_1, \dots, i_{2m})$, consider that all terms in the infinite series expansion of the MGF, as shown in [[#2.3 — Moment-Generating Functions]], vanish since they are of order less than $2m$. Next, consider that after differentiation, we subsequently set $\mathbf{t}=0$ to the remaining terms of the expression, thus eliminating all terms of order greater than $2m$. Therefore, after differentiation and setting the auxiliary vector be equal to 0, we are left with the only remaining term of order exactly $2m$, which is exactly the joint moment we are targeting. 
+After differentiating the MGF with respect to $t_{i_1},\dots,t_{i_{2m}}$ and evaluating at $\mathbf{t}=0$, only the degree-$2m$ term of the Maclaurin series can contribute. Terms of lower degree vanish under differentiation, while terms of higher degree retain some positive power of $\mathbf{t}$ and vanish at $\mathbf{t}=0$. Therefore, the relevant contribution is
 $$
 \frac{\partial^{2m}}{\partial t_{i_1}\partial t_{i_2}\cdots \partial t_{i_{2m}}} M_{\mathbf{X}}(\mathbf{t})\bigg|_{\mathbf{t}=\mathbf{0}} = \boxed{\frac{\partial^{2m}}{\partial t_{i_1}\partial t_{i_2}\cdots \partial t_{i_{2m}}}\left(\frac{\mathbb{E}[(\mathbf{t}^T\mathbf{X})^{2m}]}{(2m)!}\right)\bigg|_{\mathbf{t}=\mathbf{0}}}
 $$
@@ -582,7 +687,7 @@ $$
 \frac{\partial ^6}{\partial t_1^2\partial t_3^3 \partial t_6}{6 \choose 2,0,3,0,0,1,0,0}t_1^2t_3^3t_6^1\mathbb{E}[X_1^2X_3^3X_6]&=60\cdot 2!\cdot 3!\cdot 1\cdot\mathbb{E}[X_1 ^2X_3^3X_6] \\ &=720\cdot \mathbb{E}[X_1^2X_3^3X_6]
 \end{align*}
 $$
-And, by looking closely, $60\times 12 =720=6!=(2m)!$. So this single term contributes exactly $(2m)!\mathbb{E}[X_1^2X_3^3X_6]$, and after dividing by the $\frac{1}{(2m)!}=\frac{1}{6!}$ factor from the original Maclaurin series expansion, the overall coefficient is exactly one, which simply leaves,
+Since $60\cdot 2!\cdot 3!\cdot 1=720=6!=(2m)!$, this term contributes $(2m)!\mathbb{E}[X_1^2X_3^3X_6]$. The prefactor $\frac{1}{(2m)!}=\frac{1}{6!}$ from the Maclaurin series cancels this coefficient, leaving
 $$
 \frac{\partial ^6}{\partial t_1^2\partial t_3 ^3 \partial t_6}\left( \frac{\mathbb{E}[(\mathbf{t} ^T\mathbf{X})^6]}{6!} \right) \bigg|_{\mathbf{t}=\mathbf{0}}=\mathbb{E}\left[ X_1^2X_3^3X_6 \right].
 $$
@@ -613,6 +718,12 @@ i think we need to have numbers on the right side of the expressions to refer ba
 %%
 in the multivariate case, they are not independent, and they are not identically distributed for the ordered collection of gaussians. they are jointly distributed; they might have dependencies between one another, and they might not have the same variance even though they are all centered at mean/expectation 0
 - nevermind
+
+we acknowledge that the surviving ordered sequences of $m$ coordinate-label pairs can refer to the same contribution, the reason for this is due to two redundancies, 1) within a coordinate-label pair, we can swap the labels via symmetric property of $\Sigma$, and 2) multiplication is commutative, so order in the sequence of pairs needs to be disregarded. the two previous points tell us that, for a fixed unordered collection of $m$ coordinate-label unordered pairs (disambiguate whether pairs are unordered by def.), we have $2^m\cdot m!$ different ordered collections. we can most likely rephrase ordered sequence into ordered collection. refer to the set of ordered collections corresponding to this unordered collection as $P$ and iterate over the pairs as follows
+$$
+\sum_{p\in P}\prod_{\{a,b\}\in p}\Sigma_{i_ai_b}
+$$
+every $p$ is an individual ordered collection of ordered pairs. every $p$ contains $m$ pairs, all of which produce the same contribution since multiplication is commutative. we recognize that $a,b$ are the corresponding coordinate labels. 
 
 disambiguate terminology between univariate, multivariate, random variable, random vector.
 
@@ -727,5 +838,28 @@ and repeatedly applying the recurrence eventually gives a multiple of the previo
 $$
 \mathbb{E}[Z^{2m+1}]=0.
 $$
+
+some unorganized writing
+
+Since every surviving ordered sequence assigns the $2m$ target values $i_1, \dots, i_{2m}$ to the $2m$ slots $a_1, b_1, \dots, a_m, b_m$ in a bijective way, we can equivalently describe a surviving sequence by recording which position in the tuple $(i_1, \dots, i_{2m})$ fills each slot, rather than which value. This turns the counting problem into a purely combinatorial one on the position set $\{1, \dots, 2m\}$, independent of whether the underlying $i_1, \dots, i_{2m}$ values happen to repeat.
+
+A pairing of $\{1, \dots, 2m\}$ into $m$ pairs is an unordered collection of $m$ disjoint, unordered pairs whose union is $\{1, \dots, 2m\}$: 
+$$
+p=\{\{\alpha_1,\beta_1\},\dots,\{\alpha_m,\beta_m\}\}.
+$$
+Equivalently, $p$ is a partition of $\{1, \dots, 2m\}$ into blocks of size $2$. Given a pairing $p$, its contribution to the sum above is
+$$
+\prod_{\{\alpha, \beta\}\in p} \Sigma_{i_\alpha i_\beta},
+$$
+which is the product of $\Sigma_{i_\alpha i_\beta}$ over each pair $\{\alpha, \beta\}\in p$, using the values $i_\alpha, i_\beta$ found at the two positions that pairing groups together.
+
+Finally, each pairing $p$ corresponds to exactly $2^m \cdot m!$ ordered sequences $(a_1, b_1), \dots, (a_m, b_m)$. There are two reasons why that provide the individual constants that form the product above: 1) swapping two coordinate labels inside any pair in the ordered sequence does not change the covariance value $\Sigma_{a_k b_k}=\Sigma_{b_k a_k}$, meaning that for $m$ pairs there are
+
+
+
+
+are $2^m$ times more ordered sequences that correspond to the same pairing, and 2) 
+
+
 
 %%
